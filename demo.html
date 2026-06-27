@@ -199,33 +199,49 @@
             <!-- TAB SHIPPING: Global Shipping Monitor -->
             <div class="tab-pane" id="pane-shipping">
               <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 0.5rem; margin-bottom: 1rem;">
-                <h2 class="card-title"><i class="fa-solid fa-ship"></i> 全球航運與供應鏈監控 (World Monitor)</h2>
-                <a href="https://worldmonitor.app" target="_blank" class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.35rem 0.6rem; text-decoration: none;"><i class="fa-solid fa-arrow-up-right-from-square"></i> 開啟原版</a>
+                <h2 class="card-title"><i class="fa-solid fa-earth-americas"></i> 全球航運與地緣政治監控 (World Monitor)</h2>
+                <span style="font-size: 0.75rem; background: rgba(14,165,233,0.2); color: var(--accent-cyan); padding: 0.2rem 0.6rem; border-radius: 12px; border: 1px solid var(--accent-cyan);"><i class="fa-solid fa-circle-dot" style="animation: pulse 2s infinite;"></i> 即時連線中</span>
               </div>
               
-              <div class="shipping-monitor-wrapper" style="width: 100%; height: 550px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.2); position: relative; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                <!-- Background Preview Image with overlay -->
-                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://raw.githubusercontent.com/koala73/worldmonitor/main/docs/images/worldmonitor-7-mar-2026.jpg'); background-size: cover; background-position: top center; opacity: 0.25; filter: blur(3px);"></div>
-                
-                <!-- Foreground Content -->
-                <div style="position: relative; z-index: 2; text-align: center; padding: 2rem; background: rgba(15, 23, 42, 0.75); border-radius: 16px; border: 1px solid rgba(56, 189, 248, 0.3); box-shadow: 0 8px 32px rgba(0,0,0,0.5); backdrop-filter: blur(10px);">
-                  <div style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 1rem;">
-                    <i class="fa-solid fa-shield-halved" style="font-size: 2.5rem; color: var(--accent-cyan);"></i>
-                    <i class="fa-solid fa-satellite" style="font-size: 2.5rem; color: var(--text-muted);"></i>
+              <div class="shipping-dashboard" style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; height: 520px;">
+                <!-- Map Column -->
+                <div class="map-container" style="border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.2); background: #0f172a; position: relative;">
+                  <iframe name="vesselfinder" id="vesselfinder" width="100%" height="100%" frameborder="0" src="https://www.vesselfinder.com/aismap?zoom=3&lat=20&lon=120&width=100%&height=550&names=false&mmsi=0&track=false&fleet=false&fleet_name=false&fleet_hide_old_positions=false&clicktoact=false&store_pos=true&ra="></iframe>
+                  <!-- Map Overlay Label -->
+                  <div style="position: absolute; bottom: 10px; left: 10px; background: rgba(0,0,0,0.7); padding: 0.4rem 0.8rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); pointer-events: none;">
+                    <span style="color: #fff; font-size: 0.75rem; font-weight: 700;"><i class="fa-solid fa-satellite"></i> 衛星 AIS 即時追蹤信號</span>
                   </div>
-                  <h3 style="color: #fff; font-size: 1.35rem; font-weight: 800; margin-bottom: 0.75rem; letter-spacing: 1px;">外部資料源安全連線機制</h3>
-                  <p style="color: var(--text-secondary); font-size: 0.85rem; max-width: 420px; margin: 0 auto 1.5rem auto; line-height: 1.6;">
-                    因為 <strong>worldmonitor.app</strong> 原廠採用嚴格的資安防護政策 (X-Frame-Options)，阻擋了第三方系統內嵌擷取。<br><br>
-                    為確保跨國情資安全與連線穩定，請使用獨立的加密視窗開啟即時全球航運與供應鏈儀表板。
-                  </p>
-                  <a href="https://worldmonitor.app" target="_blank" class="btn" style="padding: 0.8rem 1.75rem; font-size: 1.05rem; box-shadow: var(--glow-cyan); transition: all 0.2s;">
-                    <i class="fa-solid fa-arrow-up-right-from-square" style="margin-right: 0.5rem;"></i> 啟動獨立戰情視窗 (Secure Launch)
-                  </a>
+                </div>
+                
+                <!-- Intel Column -->
+                <div class="intel-container" style="background: rgba(15,23,42,0.6); border: 1px solid rgba(56,189,248,0.2); border-radius: 10px; padding: 1rem; display: flex; flex-direction: column;">
+                  <h3 style="font-size: 0.9rem; color: var(--accent-cyan); margin-bottom: 1rem; border-bottom: 1px dashed rgba(56,189,248,0.3); padding-bottom: 0.5rem; display: flex; justify-content: space-between;">
+                    <span><i class="fa-solid fa-tower-cell"></i> 即時地緣情報 (Live Intel)</span>
+                  </h3>
+                  <div class="intel-feed" id="intel-feed" style="overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 0.85rem; padding-right: 0.5rem;">
+                    
+                    <div style="font-size: 0.8rem; border-left: 3px solid #ef4444; background: linear-gradient(90deg, rgba(239,68,68,0.15) 0%, rgba(239,68,68,0) 100%); padding: 0.6rem; border-radius: 0 4px 4px 0;">
+                      <div style="color: #ef4444; font-weight: 800; margin-bottom: 0.3rem; display: flex; justify-content: space-between;"><span>[CRITICAL] 紅海航線異常</span><span style="font-size: 0.65rem; font-weight: normal; opacity: 0.8;">剛剛</span></div>
+                      <div style="color: var(--text-secondary); line-height: 1.4;">武裝襲擊警報！全球四大航商宣佈繞道好望角，預計歐洲線交期延遲 14-21 天。</div>
+                    </div>
+
+                    <div style="font-size: 0.8rem; border-left: 3px solid #eab308; background: linear-gradient(90deg, rgba(234,179,8,0.15) 0%, rgba(234,179,8,0) 100%); padding: 0.6rem; border-radius: 0 4px 4px 0;">
+                      <div style="color: #eab308; font-weight: 800; margin-bottom: 0.3rem; display: flex; justify-content: space-between;"><span>[WARNING] 巴拿馬運河乾旱</span><span style="font-size: 0.65rem; font-weight: normal; opacity: 0.8;">2 小時前</span></div>
+                      <div style="color: var(--text-secondary); line-height: 1.4;">水位持續下探，每日通行船隻限縮至 24 艘，美東航線運費成本上升 15%。</div>
+                    </div>
+
+                    <div style="font-size: 0.8rem; border-left: 3px solid var(--accent-cyan); background: linear-gradient(90deg, rgba(14,165,233,0.15) 0%, rgba(14,165,233,0) 100%); padding: 0.6rem; border-radius: 0 4px 4px 0;">
+                      <div style="color: var(--accent-cyan); font-weight: 800; margin-bottom: 0.3rem; display: flex; justify-content: space-between;"><span>[INFO] 高雄港吞吐量回報</span><span style="font-size: 0.65rem; font-weight: normal; opacity: 0.8;">4 小時前</span></div>
+                      <div style="color: var(--text-secondary); line-height: 1.4;">全聯與 momo 本週進口貨櫃已順利清關，集團自動化倉儲吞吐率達 92%。</div>
+                    </div>
+
+                    <div style="font-size: 0.8rem; border-left: 3px solid #eab308; background: linear-gradient(90deg, rgba(234,179,8,0.15) 0%, rgba(234,179,8,0) 100%); padding: 0.6rem; border-radius: 0 4px 4px 0;">
+                      <div style="color: #eab308; font-weight: 800; margin-bottom: 0.3rem; display: flex; justify-content: space-between;"><span>[WARNING] 國際油價波動</span><span style="font-size: 0.65rem; font-weight: normal; opacity: 0.8;">6 小時前</span></div>
+                      <div style="color: var(--text-secondary); line-height: 1.4;">布蘭特原油突破 $85，長榮海運宣佈下月起加收燃油附加費 (BAF)。</div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.75rem; line-height: 1.5;">
-                * 即時情報：本戰情室嵌入開源專案 <a href="https://github.com/koala73/worldmonitor" target="_blank" style="color: var(--accent-cyan); text-decoration: none;">koala73/worldmonitor</a> 之情資面板，能即時追蹤全球海運航線與港口動態。
-              </p>
             </div>
 
             <!-- TAB 1: Opening / Concepts Intro (思維整流) -->
